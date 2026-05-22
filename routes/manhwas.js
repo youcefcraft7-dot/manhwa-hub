@@ -2,7 +2,8 @@ const {
   getAllManhwas,
   getManhwaById,
   searchManhwas,
-  getManhwasByGenre
+  getManhwasByGenre,
+  getChapter
 } = require("../controllers/manhwasController");
 
 function handleManhwaRoutes(req, res) {
@@ -34,6 +35,29 @@ function handleManhwaRoutes(req, res) {
     );
 
     getManhwasByGenre(req, res, genre);
+
+    return true;
+  }
+
+  const chapterMatch =
+    req.url.match(
+      /^\/api\/manhwa\/(\d+)\/chapter\/(\d+)$/
+    );
+
+  if (chapterMatch) {
+
+    const manhwaId =
+      parseInt(chapterMatch[1]);
+
+    const chapterId =
+      parseInt(chapterMatch[2]);
+
+    getChapter(
+      req,
+      res,
+      manhwaId,
+      chapterId
+    );
 
     return true;
   }
