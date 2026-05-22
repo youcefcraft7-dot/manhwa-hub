@@ -1,6 +1,7 @@
 {
   "name": "manhwa-hub",
   "version": "1.0.0",
+  "description": "Manhwa Hub Backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
