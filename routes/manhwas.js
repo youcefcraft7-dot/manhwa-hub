@@ -1,7 +1,8 @@
 const {
   getAllManhwas,
   getManhwaById,
-  searchManhwas
+  searchManhwas,
+  getManhwasByGenre
 } = require("../controllers/manhwasController");
 
 function handleManhwaRoutes(req, res) {
@@ -22,6 +23,17 @@ function handleManhwaRoutes(req, res) {
       url.searchParams.get("q") || "";
 
     searchManhwas(req, res, query);
+
+    return true;
+  }
+
+  if (req.url.startsWith("/api/genres/")) {
+
+    const genre = decodeURIComponent(
+      req.url.split("/").pop()
+    );
+
+    getManhwasByGenre(req, res, genre);
 
     return true;
   }
