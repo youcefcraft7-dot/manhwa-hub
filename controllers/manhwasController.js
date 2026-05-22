@@ -48,8 +48,24 @@ function searchManhwas(req, res, query) {
   res.end(JSON.stringify(results));
 }
 
+function getManhwasByGenre(req, res, genre) {
+
+  const results = manhwas.filter(item =>
+    item.genres.some(
+      g => g.toLowerCase() === genre.toLowerCase()
+    )
+  );
+
+  res.writeHead(200, {
+    "Content-Type": "application/json"
+  });
+
+  res.end(JSON.stringify(results));
+}
+
 module.exports = {
   getAllManhwas,
   getManhwaById,
-  searchManhwas
+  searchManhwas,
+  getManhwasByGenre
 };
