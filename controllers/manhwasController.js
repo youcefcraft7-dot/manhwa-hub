@@ -33,7 +33,23 @@ function getManhwaById(req, res, id) {
   res.end(JSON.stringify(manhwa));
 }
 
+function searchManhwas(req, res, query) {
+
+  const results = manhwas.filter(item =>
+    item.title.toLowerCase().includes(
+      query.toLowerCase()
+    )
+  );
+
+  res.writeHead(200, {
+    "Content-Type": "application/json"
+  });
+
+  res.end(JSON.stringify(results));
+}
+
 module.exports = {
   getAllManhwas,
-  getManhwaById
+  getManhwaById,
+  searchManhwas
 };
