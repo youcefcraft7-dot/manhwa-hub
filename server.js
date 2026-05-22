@@ -15,11 +15,6 @@ const manhwas = [
     id: 3,
     title: "Omniscient Reader",
     cover: "https://i.imgur.com/9J8LQ1R.jpg"
-  },
-  {
-    id: 99,
-    title: "TEST",
-    cover: "https://example.com/test.jpg"
   }
 ];
 
@@ -37,9 +32,22 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  if (req.url === "/api/manhwa/1") {
+  if (req.url.startsWith("/api/manhwa/")) {
+
+    const id = parseInt(req.url.split("/").pop());
+
+    const manhwa = manhwas.find(item => item.id === id);
+
+    if (!manhwa) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({
+        error: "Manhwa not found"
+      }));
+      return;
+    }
+
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify(manhwas[0]));
+    res.end(JSON.stringify(manhwa));
     return;
   }
 
