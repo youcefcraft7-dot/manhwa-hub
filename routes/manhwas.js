@@ -1,41 +1,23 @@
-const manhwas = require("../data/manhwas");
+const {
+  getAllManhwas,
+  getManhwaById
+} = require("../controllers/manhwasController");
 
 function handleManhwaRoutes(req, res) {
 
   if (req.url === "/api/manhwas") {
-    res.writeHead(200, {
-      "Content-Type": "application/json"
-    });
-
-    res.end(JSON.stringify(manhwas));
+    getAllManhwas(req, res);
     return true;
   }
 
   if (req.url.startsWith("/api/manhwa/")) {
 
-    const id = parseInt(req.url.split("/").pop());
-
-    const manhwa = manhwas.find(
-      item => item.id === id
+    const id = parseInt(
+      req.url.split("/").pop()
     );
 
-    if (!manhwa) {
-      res.writeHead(404, {
-        "Content-Type": "application/json"
-      });
+    getManhwaById(req, res, id);
 
-      res.end(JSON.stringify({
-        error: "Manhwa not found"
-      }));
-
-      return true;
-    }
-
-    res.writeHead(200, {
-      "Content-Type": "application/json"
-    });
-
-    res.end(JSON.stringify(manhwa));
     return true;
   }
 
