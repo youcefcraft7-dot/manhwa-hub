@@ -18,8 +18,25 @@ const manhwas = [
   }
 ];
 
+const server = http.createServer((req, res) => {
+
+  if (req.url === "/") {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("Manhwa Hub Backend is running!");
+  }
+
+  else if (req.url === "/api/manhwas") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(manhwas));
+  }
+
+  else if (req.url === "/api/manhwa/1") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(manhwas[0]));
+  }
+
   else {
-    res.writeHead(404);
+    res.writeHead(404, { "Content-Type": "text/plain" });
     res.end("Not Found");
   }
 
