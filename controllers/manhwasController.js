@@ -63,9 +63,51 @@ function getManhwasByGenre(req, res, genre) {
   res.end(JSON.stringify(results));
 }
 
+function getChapter(req, res, manhwaId, chapterId) {
+
+  const manhwa = manhwas.find(
+    item => item.id === manhwaId
+  );
+
+  if (!manhwa) {
+    res.writeHead(404, {
+      "Content-Type": "application/json"
+    });
+
+    res.end(JSON.stringify({
+      error: "Manhwa not found"
+    }));
+
+    return;
+  }
+
+  const chapter = manhwa.chapters.find(
+    item => item.id === chapterId
+  );
+
+  if (!chapter) {
+    res.writeHead(404, {
+      "Content-Type": "application/json"
+    });
+
+    res.end(JSON.stringify({
+      error: "Chapter not found"
+    }));
+
+    return;
+  }
+
+  res.writeHead(200, {
+    "Content-Type": "application/json"
+  });
+
+  res.end(JSON.stringify(chapter));
+}
+
 module.exports = {
   getAllManhwas,
   getManhwaById,
   searchManhwas,
-  getManhwasByGenre
+  getManhwasByGenre,
+  getChapter
 };
